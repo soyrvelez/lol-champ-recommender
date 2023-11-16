@@ -1,5 +1,5 @@
 'use strict';
-const bcrypt = require('bcryptjs'); 
+const bcrypt = require('bcryptjs');
 const {
   Model
 } = require('sequelize');
@@ -12,15 +12,20 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      models.user.hasMany(models.recommendation);
     }
   }
   user.init({
-    name: {
+    username: {
       type: DataTypes.STRING,
+      allowNull: false,
       validate: {
         len: {
           args: [1,99],
-          msg: "Name must be between 1 and 99 characters"
+          msg: "username must be between 1 and 99 characters"
+        },
+        notEmpty: {
+          msg: "A username is required"
         }
       }
     },
@@ -40,6 +45,14 @@ module.exports = (sequelize, DataTypes) => {
           msg: "Password must be between 8 and 99 characters"
         }
       }
+    },
+    createdAt: {
+      allowNull: false,
+      type: DataTypes.DATE
+    },
+    updatedAt: {
+      allowNull: false,
+      type: DataTypes.DATE
     }
   }, {
     sequelize,
@@ -51,7 +64,7 @@ module.exports = (sequelize, DataTypes) => {
     // Bcrypt is going to hash the password
     let hash = bcrypt.hashSync(pendingUser.password, 12); // hash 12 times
     pendingUser.password = hash; // this will go to the DB
-  });  
+  });
 
    // Check the password on Sign-In and compare it to the hashed password in the DB
   user.prototype.validPassword = function(typedPassword) {
@@ -62,9 +75,9 @@ module.exports = (sequelize, DataTypes) => {
 
   // return an object from the database of the user without the encrypted password
   user.prototype.toJSON = function() {
-    let userData = this.get(); 
-    delete userData.password; // it doesn't delete password from database, only removes it. 
-    
+    let userData = this.get();
+    delete userData.password; // it doesn't delete password from database, only removes it.
+
     return userData;
   }
 
