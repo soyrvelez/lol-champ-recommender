@@ -6,6 +6,7 @@ const passport = require('../config/ppConfig');
 const session = require('express-session');
 const isLoggedIn = require('../middleware/isLoggedIn');
 const db = require('../models');
+const championListURL = 'https://ddragon.leagueoflegends.com/cdn/13.22.1/data/en_US/champion.json';
 
 router.post('/recommend', async (req, res) => {  // Marked as async
   console.log(req.body);
@@ -17,11 +18,14 @@ router.post('/recommend', async (req, res) => {  // Marked as async
 
     const champion = await getChampionRecommendation(prompt);
     if (champion) {
-      const championLowercase = champion.toLowerCase();
-
-
-      console.log(championLowercase);
-      res.redirect(`/recommendation/${championLowercase}`);
+      const championExists = await isChampionPresent(champion);
+      if (championExists) {
+        const championLowercase = champion.toLowerCase();
+        console.log(championLowercase);
+        res.redirect(`/recommendation/${championLowercase}`);
+      } else {
+        res.status(404).send('Champion not found');
+      }
     } else {
       res.status(500).send('Error getting recommendation');
     }
@@ -33,6 +37,7 @@ router.post('/recommend', async (req, res) => {  // Marked as async
 
 router.get('/:champion', (req, res) => {
   const champion = req.params.champion
+
   res.render('recommendation', { champion });
 });
 
@@ -55,6 +60,17 @@ async function getChampionRecommendation(prompt) {
   } catch (error) {
     console.error(error);
     return null;
+  }
+};
+
+async function isChampionPresent(champion) {
+  try {
+    const response = await fetch(championListURL);
+    const data = await response.json();
+    return data.data.hasOwnProperty(champion);
+  } catch (error) {
+    console.log('Error fetching data', error);
+    return false;
   }
 };
 
