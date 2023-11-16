@@ -26,6 +26,11 @@ router.post('/recommend', async (req, res) => {  // Marked as async
   }
 });
 
+router.get('/:champion', (req, res) => {
+  const champion = req.params.champion
+  res.render('recommendation', { champion });
+});
+
 async function getChampionRecommendation(prompt) {
   try {
     const response = await openai.chat.completions.create({
