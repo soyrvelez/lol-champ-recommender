@@ -27,7 +27,7 @@ router.post('/login', passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/auth/login',
   successFlash: 'Welcome back ...',
-  failureFlash: 'Either email or password is incorrect' 
+  failureFlash: 'Either email or password is incorrect'
 }));
 
 router.post('/signup', async (req, res) => {
@@ -46,7 +46,7 @@ router.post('/signup', async (req, res) => {
             successRedirect: '/',
             successFlash: `Welcome ${_user.name}. Account was created and logging in...`
         }
-        // 
+        //
         passport.authenticate('local', successObject)(req, res);
     } else {
       // Send back email already exists

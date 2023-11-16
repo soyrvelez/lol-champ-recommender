@@ -16,16 +16,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   user.init({
-    username: {
+    name: {
       type: DataTypes.STRING,
-      allowNull: false,
       validate: {
         len: {
           args: [1,99],
-          msg: "username must be between 1 and 99 characters"
-        },
-        notEmpty: {
-          msg: "A username is required"
+          msg: "Name must be between 1 and 99 characters"
         }
       }
     },
@@ -45,14 +41,6 @@ module.exports = (sequelize, DataTypes) => {
           msg: "Password must be between 8 and 99 characters"
         }
       }
-    },
-    createdAt: {
-      allowNull: false,
-      type: DataTypes.DATE
-    },
-    updatedAt: {
-      allowNull: false,
-      type: DataTypes.DATE
     }
   }, {
     sequelize,

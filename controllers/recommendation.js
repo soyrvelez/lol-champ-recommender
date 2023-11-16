@@ -22,6 +22,10 @@ router.post('/recommend', async (req, res) => {  // Marked as async
       if (championExists) {
         const championLowercase = champion.toLowerCase();
         console.log(championLowercase);
+
+        // create recommendation in database
+        
+
         res.redirect(`/recommendation/${championLowercase}`);
       } else {
         res.status(404).send('Champion not found');
