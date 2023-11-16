@@ -2,7 +2,10 @@ const express = require('express');
 const router = express.Router();
 const OpenAIAPI = require('openai');
 const openai = new OpenAIAPI({ apiKey: process.env.OPENAI_API_KEY });
-const { Recommendation } = require('../models');
+const passport = require('../config/ppConfig');
+const session = require('express-session');
+const isLoggedIn = require('../middleware/isLoggedIn');
+const db = require('../models');
 
 router.post('/recommend', async (req, res) => {  // Marked as async
   console.log(req.body);
@@ -15,6 +18,8 @@ router.post('/recommend', async (req, res) => {  // Marked as async
     const champion = await getChampionRecommendation(prompt);
     if (champion) {
       const championLowercase = champion.toLowerCase();
+
+
       console.log(championLowercase);
       res.redirect(`/recommendation/${championLowercase}`);
     } else {
