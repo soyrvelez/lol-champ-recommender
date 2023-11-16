@@ -10,7 +10,14 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       userid: {
-        type: Sequelize.INTEGER
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'users',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL'
       },
       prompt: {
         type: Sequelize.TEXT
@@ -19,16 +26,10 @@ module.exports = {
         type: Sequelize.TEXT
       },
       createdat: {
-        type: Sequelize.DATE
-      },
-      updatedat: {
-        type: Sequelize.DATE
-      },
-      createdAt: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updatedAt: {
+      updatedat: {
         allowNull: false,
         type: Sequelize.DATE
       }
