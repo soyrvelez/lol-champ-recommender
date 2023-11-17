@@ -1,10 +1,10 @@
 <h2>LoL Champ Recommender</h2>
-<form action="">
+<form action="/recommendation/recommend" method="POST">
   <div class="form-floating col-sm-8">
     <textarea class="form-control"
       id="prompt"
       placeholder="Today I'm feeling tired after a long day of work..."
-      rows="5"></textarea>
+      rows="5" name="prompt"></textarea>
     <label for="prompt">What's your vibe today?</label>
     <button type="submit">Get Recommendation</button>
 </form>

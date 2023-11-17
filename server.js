@@ -37,7 +37,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/', (req, res) => {
+app.get('/', isLoggedIn, (req, res) => {
   res.render('index');
 })
 

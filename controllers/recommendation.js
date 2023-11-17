@@ -23,6 +23,8 @@ router.post('/recommend', async (req, res) => {  // Marked as async
         const championLowercase = champion.toLowerCase();
         console.log(championLowercase);
 
+        // get user data
+
         // create recommendation in database
         const newRecommendation = await createRecommendation(prompt, champion);
         console.log(newRecommendation);
