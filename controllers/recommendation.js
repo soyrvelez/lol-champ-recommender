@@ -24,7 +24,8 @@ router.post('/recommend', async (req, res) => {  // Marked as async
         console.log(championLowercase);
 
         // create recommendation in database
-        
+        // const newRecommendation = await createRecommendation(prompt, champion);
+        // console.log(newRecommendation);
 
         res.redirect(`/recommendation/${championLowercase}`);
       } else {
@@ -75,6 +76,20 @@ async function isChampionPresent(champion) {
   } catch (error) {
     console.log('Error fetching data', error);
     return false;
+  }
+};
+
+async function createRecommendation(prompt, champion) {
+  try {
+    const newRecommendation = await db.recommendation.create({
+      userid: 1,
+      prompt: prompt,
+      recommendedChampion: champion
+    });
+    console.log('new recc >>>', newRecommendation);
+    return newRecommendation;
+  } catch (error) {
+    console.log('new reccommendation was not created b/c of', error);
   }
 };
 

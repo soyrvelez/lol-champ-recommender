@@ -25,11 +25,11 @@ module.exports = {
       recommendedChampion: {
         type: Sequelize.TEXT
       },
-      createdat: {
+      createdAt: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updatedat: {
+      updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
       }

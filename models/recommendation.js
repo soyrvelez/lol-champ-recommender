@@ -18,8 +18,6 @@ module.exports = (sequelize, DataTypes) => {
     userid: DataTypes.INTEGER,
     prompt: DataTypes.TEXT,
     recommendedChampion: DataTypes.TEXT,
-    createdat: DataTypes.DATE,
-    updatedat: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'recommendation',
