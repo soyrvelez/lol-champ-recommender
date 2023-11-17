@@ -61,6 +61,21 @@ app.delete('/:userid', async (req, res) => {
   }
 });
 
+app.put('/:userid', async (req, res) => {
+  try {
+    const numRowsUpdated = await db.user.update({
+      name: 'Updated Name'
+    }, {
+      where: {
+        id: req.params.userid
+      }
+    });
+    console.log('number of users updated', numRowsUpdated);
+  } catch (error) {
+    console.log('did not update user because of >>>', error);
+  }
+});
+
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => {
   console.log(`🎧 You're listening to the smooth sounds of port ${PORT} 🎧`);
