@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   recommendation.init({
-    userid: DataTypes.INTEGER,
+    userId: DataTypes.INTEGER,
     prompt: DataTypes.TEXT,
     recommendedChampion: DataTypes.TEXT,
   }, {

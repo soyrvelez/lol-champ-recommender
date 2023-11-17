@@ -24,8 +24,8 @@ router.post('/recommend', async (req, res) => {  // Marked as async
         console.log(championLowercase);
 
         // create recommendation in database
-        // const newRecommendation = await createRecommendation(prompt, champion);
-        // console.log(newRecommendation);
+        const newRecommendation = await createRecommendation(prompt, champion);
+        console.log(newRecommendation);
 
         res.redirect(`/recommendation/${championLowercase}`);
       } else {
@@ -82,7 +82,7 @@ async function isChampionPresent(champion) {
 async function createRecommendation(prompt, champion) {
   try {
     const newRecommendation = await db.recommendation.create({
-      userid: 1,
+      userId: 1,
       prompt: prompt,
       recommendedChampion: champion
     });
