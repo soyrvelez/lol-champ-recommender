@@ -6,7 +6,7 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('./config/ppConfig');
 const isLoggedIn = require('./middleware/isLoggedIn');
-const database = require('./models');
+const db = require('./models');
 
 // environment variables
 SECRET_SESSION = process.env.SECRET_SESSION;
@@ -50,7 +50,16 @@ app.get('/profile', isLoggedIn, (req, res) => {
   res.render('profile', { id, name, email });
 });
 
-//
+app.delete('/:userid', async (req, res) => {
+  try {
+    let numOfRowsDeleted = await db.user.destroy({
+      where: { id: 7 }
+    });
+    console.log('number of rows deleted >>>', numOfRowsDeleted);
+  } catch (error) {
+    console.log('did not delete user because of >>>', error);
+  }
+});
 
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => {
