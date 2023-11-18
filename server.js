@@ -42,7 +42,7 @@ app.get('/', isLoggedIn, (req, res) => {
 })
 
 app.use('/auth', require('./controllers/auth'));
-app.use('/recommendation', require('./controllers/recommendation'));
+app.use('/recommendation', isLoggedIn, require('./controllers/recommendation'));
 
 // Add this below /auth controllers
 app.get('/profile', isLoggedIn, (req, res) => {

@@ -2,15 +2,13 @@ const express = require('express');
 const router = express.Router();
 const OpenAIAPI = require('openai');
 const openai = new OpenAIAPI({ apiKey: process.env.OPENAI_API_KEY });
-const passport = require('../config/ppConfig');
-const session = require('express-session');
-const isLoggedIn = require('../middleware/isLoggedIn');
 const db = require('../models');
 const championListURL = 'https://ddragon.leagueoflegends.com/cdn/13.22.1/data/en_US/champion.json';
 
 router.post('/recommend', async (req, res) => {  // Marked as async
-  console.log(req.body);
   try {
+    const { id } = req.user.get();
+    console.log(id);
     const { prompt } = req.body;
     if (!prompt) {
       return res.status(400).send('A prompt is required');
@@ -26,12 +24,12 @@ router.post('/recommend', async (req, res) => {  // Marked as async
         // get user data
 
         // create recommendation in database
-        const newRecommendation = await createRecommendation(prompt, champion);
+        const newRecommendation = await createRecommendation(id, prompt, champion);
         console.log(newRecommendation);
 
         res.redirect(`/recommendation/${championLowercase}`);
       } else {
-        res.status(404).send('Champion not found');
+        res.status(404).render('404');
       }
     } else {
       res.status(500).send('Error getting recommendation');
@@ -81,10 +79,10 @@ async function isChampionPresent(champion) {
   }
 };
 
-async function createRecommendation(prompt, champion) {
+async function createRecommendation(id, prompt, champion) {
   try {
     const newRecommendation = await db.recommendation.create({
-      userId: 1,
+      userId: id,
       prompt: prompt,
       recommendedChampion: champion
     });

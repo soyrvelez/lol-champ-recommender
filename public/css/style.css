@@ -3,6 +3,10 @@ nav ul li {
   display: inline-block;
   margin-right: .3em;
 }
+
+.nav-link {
+    color: #FFFFFF;
+}
 .gradient-custom {
   /* fallback for old browsers */
   background: #6a11cb;
