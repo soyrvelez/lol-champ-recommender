@@ -56,7 +56,7 @@ async function getChampionRecommendation(prompt) {
       messages: [
         {
           "role": "system",
-          "content": "Users will share information about their day and current mood with you. Based on their input, you will assess which league of legends champion would best match their current mood and day they're having. Your response should only include the name of the champion and nothing else."
+          "content": "Users will share their current vibe. Based on their input, you will assess which league of legends champion would best match their current vibe so they can have the most fun playing. Your response should only include the name of the champion and nothing else."
         },
         {
           "role": "user",
