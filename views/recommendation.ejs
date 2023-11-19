@@ -1,101 +1,118 @@
 <body>
+  <% let championCamelcase = champion.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(''); %>
   <div class="container text-center mt-5">
-    <h1>HERO Image</h1>
-    <h1>Champion Name</h1>
-    <h4>Title</h4>
-    <div class="container text-center">
-      <div class="row">
-        <div class="col">
-          <h6>Tag 1</h6>
-          <h6>Tag 2</h6>
-        </div>
+    <div class="mx-auto">
+      <img class="img-fluid w-75 h-auto rounded-5" src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/<%= championCamelcase %>_0.jpg" alt="<%= championCamelcase %> Splash Art">
+    </div>
+    <h1 class="mt-2 text-decoration-underline"><%= championCamelcase %></h1>
+    <h4 class="text-capitalize fw-light"><%= championData.title %></h4>
+    <div class="container">
+      <div class="row justify-content-center">
+            <% for( let index = 0; index < championData.tags.length; index++ ) { %>
+              <div class="col-1">
+                <span class="badge rounded-pill text-bg-dark"><%=  championData.tags[index] %></span>
+              </div>
+            <% } %>
       </div>
+    </div>
+    <div class="container mt-3">
+      <table class="table table-borderless">
+        <thead>
+          <tr class="table-dark">
+            <th scope="col">HP</th>
+            <th scope="col">Armor</th>
+            <th scope="col">Attack Damage</th>
+            <th scope="col">Move Speed</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row"><%= championData.stats.hp %></th>
+            <th scope="row"><%= championData.stats.armor %></th>
+            <th scope="row"><%= championData.stats.attackdamage %></th>
+            <th scope="row"><%= championData.stats.movespeed %></th>
+          </tr>
+        </tbody>
+      </table>
     </div>
     <hr>
     <div class="container text-container">
-      <h3>Lore</h3>
-      <p>Sadistic and cunning, Thresh is an ambitious and restless spirit of the Shadow Isles. Once the custodian of countless arcane secrets, he was undone by a power greater than life or death, and now sustains himself by tormenting and breaking others with slow, excruciating inventiveness. His victims suffer far beyond their brief mortal coil as Thresh wreaks agony upon their souls, imprisoning them in his unholy lantern to torture for all eternity.</p>
+      <h3>Champion Lore</h3>
     </div>
-  </div>
-  <div class="container text-center">
-    <h3>Champion Abilities</h3>
-    <div class="container">
-      <hr>
-      <div class="row">
-        <div class="col">
-          <img src="https://ddragon.leagueoflegends.com/cdn/13.22.1/img/passive/Thresh_Passive.png" alt="<%= championData.passive.image %> Sprite">
-          <h4>Ability Name</h4>
-        </div>
-        <div class="col">
-          <p>Thresh can harvest the souls of enemies that die near him, permanently granting him Armor and Ability Power.</p>
-        </div>
-      </div>
-      <hr>
-    </div>
-  </div>
-  <div class="container text-center">
-    <h3 class="">Key Stats</h3>
-    <div class="container text-center">
-      <div class="row">
-        <div class="col">
-          <strong>HP:</strong> 600
-        </div>
-        <div class="col">
-          <strong>Armor:</strong> 28
-        </div>
-        <div class="col">
-          <strong>Attack Damage:</strong> 56
-        </div>
-        <div class="col">
-          <strong>Move Speed:</strong> 330
-        </div>
-      </div>
+    <div class="container text-container w-75">
+      <p><%= championData.lore %></p>
     </div>
     <hr>
   </div>
   <div class="container text-center">
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">Communication is key when making use of Thresh's lantern. Let your teammates know how you like to use it.</li>
-      <li class="list-group-item">Death Sentence and Flay can be combined in either cast order for powerful combinations.</li>
-      <li class="list-group-item">Thresh can collect souls without needing to kill units himself. Planning your map position to be near the most deaths will help to maximize soul collection.</li>
-    </ul>
-  </div>
-  <% let championCamelcase = champion.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(''); %>
-  <img class="mx-auto d-block" src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/<%= championCamelcase %>_0.jpg" alt="<%= championCamelcase %> Splash Art">
-      <h1><%= championCamelcase %></h1>
-      <h2><%= championData.title %></h2>
-      <h3>Key Stats</h3>
-        <ul>
-          <li>HP: <%= championData.stats.hp %></li>
-          <li>Armor: <%= championData.stats.armor %></li>
-          <li>Attack Damage: <%= championData.stats.attackdamage %></li>
-          <li>Move Speed: <%= championData.stats.movespeed %></li>
-        </ul>
-      <h3>Champion Tags</h3>
-      <ul>
-        <% for( let index = 0; index < championData.tags.length; index++ ) { %>
-          <li><%=  championData.tags[index] %></li>
-        <% } %>
-      </ul>
-      <h3>Champion Lore</h3>
-      <p><%= championData.lore %></p>
-      <h3>Champion Abilities</h3>
-        <img src="https://ddragon.leagueoflegends.com/cdn/13.22.1/img/passive/<%= championData.passive.image.full %>" alt="<%= championData.passive.image %> Sprite">
-        <h4>Passive: <%= championData.passive.name %></h4>
+    <h3 class="mb-5">Champion Abilities</h3>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <h4>Passive: <%= championData.passive.name %></h4>
+        </div>
+        <div class="col">
+          <img src="https://ddragon.leagueoflegends.com/cdn/13.22.1/img/passive/<%= championData.passive.image.full %>" alt="<%= championData.passive.image %> Sprite">
+        </div>
+        <div class="col">
           <p><%=  championData.passive.description %></p>
-        <% for( let index = 0; index < championData.spells.length; index++ ) { %>
-          <img src="https://ddragon.leagueoflegends.com/cdn/13.22.1/img/spell/<%= championData.spells[index].image.full %>" alt="<%= championData.passive.image %> Sprite">
-          <h4><%= championData.spells[index].name %></h4>
-          <p><%= championData.spells[index].description %></p>
-        <% } %>
-      <h3>Tips</h3>
-      <ul>
-      <% for( let index = 0; index < championData.allytips.length; index++ ) { %>
-        <li><%= championData.allytips[index] %></li>
+        </div>
+      </div>
+      <% for( let index = 0; index < championData.spells.length; index++ ) { %>
+        <hr>
+        <div class="row">
+          <div class="col">
+            <h4><%= championData.spells[index].name %></h4>
+          </div>
+          <div class="col">
+            <img src="https://ddragon.leagueoflegends.com/cdn/13.22.1/img/spell/<%= championData.spells[index].image.full %>" alt="<%= championData.spells[index].name %> Sprite">
+          </div>
+          <div class="col">
+            <p><%= championData.spells[index].description %></p>
+          </div>
+        </div>
       <% } %>
-      </ul>
-      <h3>Featured Champion Skin</h3>
-      <% let featuredSkin = Math.floor(Math.random() * championData.skins.length) %>
-      <img src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/<%= championCamelcase %>_<%= championData.skins[featuredSkin].num %>.jpg" alt="Featured Skin">
-      <h4><%= championData.skins[featuredSkin].name %></h4>
+    </div>
+    <hr>
+  </div>
+  <div class="container text-center">
+    <h3>Champion Tips</h3>
+    <ul class="list-group list-group-flush">
+      <% for( let index = 0; index < championData.allytips.length; index++ ) { %>
+        <li class="list-group-item"><%= championData.allytips[index] %></li>
+      <% } %>
+    </ul>
+    <hr>
+  </div>
+  <div class="container text-center mb-3">
+    <h3><%= championCamelcase %> Skin Gallery</h3>
+  </div>
+  <div class="container mb-5">
+    <div id="carouselExampleCaptions" class="carousel slide">
+      <div class="carousel-indicators">
+        <% for( let index = 1; index < championData.skins.length; index++ ) { %>
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="<%= index %>" class="<%= index === 1 ? 'active' : '' %>" aria-current="<%= index === 1 ? 'true' : 'false' %>" aria-label="Slide <%= index + 1 %>"></button>
+        <% } %>
+      </div>
+      <div class="carousel-inner container text-center">
+        <% for( let index = 1; index < championData.skins.length; index++ ) { %>
+          <div class="carousel-item <%= index === 1 ? 'active' : '' %>">
+            <img class="rounded-5" src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/<%= championCamelcase %>_<%= championData.skins[index].num %>.jpg" alt="Featured Skin">
+            <div class="carousel-caption d-none d-md-block">
+              <h5><%= championData.skins[index].name %></h5>
+            </div>
+          </div>
+        <% } %>
+
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+    </div>
+</div>
 </body>
