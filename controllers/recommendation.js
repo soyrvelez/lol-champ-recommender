@@ -4,6 +4,7 @@ const OpenAIAPI = require('openai');
 const openai = new OpenAIAPI({ apiKey: process.env.OPENAI_API_KEY });
 const db = require('../models');
 const championListURL = 'https://ddragon.leagueoflegends.com/cdn/13.22.1/data/en_US/champion.json';
+const exceptionChampions = ["Aureion Sol", ""];
 
 router.post('/recommend', async (req, res) => {  // Marked as async
   try {
@@ -98,8 +99,11 @@ async function createRecommendation(id, prompt, champion) {
 
 async function getChampionData(champion) {
   try {
-    const championCapitalized = champion.charAt(0).toUpperCase() + champion.slice(1);
+    const championCapitalized = champion.split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join('');
 
+    console.log('debugging this championcapitalized', championCapitalized);
     const response = await fetch(`https://ddragon.leagueoflegends.com/cdn/13.22.1/data/en_US/champion/${championCapitalized}.json`);
     const championData = await response.json();
     console.log('debugging this >>>', championData.data[championCapitalized]);

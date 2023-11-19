@@ -1,11 +1,19 @@
-<h2>LoL Champ Recommender</h2>
-<form action="/recommendation/recommend" method="POST">
-  <div class="form-floating col-sm-8">
-    <textarea class="form-control"
-      id="prompt"
-      placeholder="Today I'm feeling tired after a long day of work..."
-      rows="5" name="prompt"></textarea>
-    <label for="prompt">What's your vibe today?</label>
-    <button type="submit">Get Recommendation</button>
-</form>
-</div>
+<body>
+  <div class="d-flex justify-content-center align-items-center min-vh-100">
+      <div class="text-center">
+          <h1 class="mt-5">LoL Recommender</h1>
+          <p>Struggling to decide what champion to play? Share your vibe and let AI find the perfect champion for you.</p>
+          <form action="/recommendation/recommend" method="POST">
+              <div class="form-floating mt-3">
+                  <textarea class="form-control"
+                            id="prompt"
+                            placeholder="Today I'm feeling tired after a long day of work..."
+                            rows="5"
+                            name="prompt"></textarea>
+                  <label for="prompt">What's your vibe today?</label>
+              </div>
+              <button class="btn btn-dark btn-lg mt-4" type="submit">Get Recommendation</button>
+          </form>
+      </div>
+  </div>
+</body>
