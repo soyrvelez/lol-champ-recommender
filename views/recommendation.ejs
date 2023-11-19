@@ -1,39 +1,41 @@
-<% let championCamelcase = champion.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(''); %>
-<img class="mx-auto d-block" src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/<%= championCamelcase %>_0.jpg" alt="<%= championCamelcase %> Splash Art">
+<body class="text-center">
+  <% let championCamelcase = champion.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(''); %>
+  <img class="mx-auto d-block" src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/<%= championCamelcase %>_0.jpg" alt="<%= championCamelcase %> Splash Art">
 
-<h1><%= championCamelcase %></h1>
-<h2><%= championData.title %></h2>
-<h3>Key Stats</h3>
+  <h1><%= championCamelcase %></h1>
+  <h2><%= championData.title %></h2>
+  <h3>Key Stats</h3>
+    <ul>
+      <li>HP: <%= championData.stats.hp %></li>
+      <li>Armor: <%= championData.stats.armor %></li>
+      <li>Attack Damage: <%= championData.stats.attackdamage %></li>
+      <li>Move Speed: <%= championData.stats.movespeed %></li>
+    </ul>
+  <h3>Champion Tags</h3>
   <ul>
-    <li>HP: <%= championData.stats.hp %></li>
-    <li>Armor: <%= championData.stats.armor %></li>
-    <li>Attack Damage: <%= championData.stats.attackdamage %></li>
-    <li>Move Speed: <%= championData.stats.movespeed %></li>
+    <% for( let index = 0; index < championData.tags.length; index++ ) { %>
+      <li><%=  championData.tags[index] %></li>
+    <% } %>
   </ul>
-<h3>Champion Tags</h3>
-<ul>
-  <% for( let index = 0; index < championData.tags.length; index++ ) { %>
-    <li><%=  championData.tags[index] %></li>
+  <h3>Champion Lore</h3>
+  <p><%= championData.lore %></p>
+  <h3>Champion Abilities</h3>
+    <img src="https://ddragon.leagueoflegends.com/cdn/13.22.1/img/passive/<%= championData.passive.image.full %>" alt="<%= championData.passive.image %> Sprite">
+    <h4>Passive: <%= championData.passive.name %></h4>
+      <p><%=  championData.passive.description %></p>
+    <% for( let index = 0; index < championData.spells.length; index++ ) { %>
+      <img src="https://ddragon.leagueoflegends.com/cdn/13.22.1/img/spell/<%= championData.spells[index].image.full %>" alt="<%= championData.passive.image %> Sprite">
+      <h4><%= championData.spells[index].name %></h4>
+      <p><%= championData.spells[index].description %></p>
+    <% } %>
+  <h3>Tips</h3>
+  <ul>
+  <% for( let index = 0; index < championData.allytips.length; index++ ) { %>
+    <li><%= championData.allytips[index] %></li>
   <% } %>
-</ul>
-<h3>Champion Lore</h3>
-<p><%= championData.lore %></p>
-<h3>Champion Abilities</h3>
-  <img src="https://ddragon.leagueoflegends.com/cdn/13.22.1/img/passive/<%= championData.passive.image.full %>" alt="<%= championData.passive.image %> Sprite">
-  <h4>Passive: <%= championData.passive.name %></h4>
-    <p><%=  championData.passive.description %></p>
-  <% for( let index = 0; index < championData.spells.length; index++ ) { %>
-    <img src="https://ddragon.leagueoflegends.com/cdn/13.22.1/img/spell/<%= championData.spells[index].image.full %>" alt="<%= championData.passive.image %> Sprite">
-    <h4><%= championData.spells[index].name %></h4>
-    <p><%= championData.spells[index].description %></p>
-  <% } %>
-<h3>Tips</h3>
-<ul>
-<% for( let index = 0; index < championData.allytips.length; index++ ) { %>
-  <li><%= championData.allytips[index] %></li>
-<% } %>
-</ul>
-<h3>Featured Champion Skin</h3>
-<% let featuredSkin = Math.floor(Math.random() * championData.skins.length) %>
-<img src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/<%= championCamelcase %>_<%= championData.skins[featuredSkin].num %>.jpg" alt="Featured Skin">
-<h4><%= championData.skins[featuredSkin].name %></h4>
+  </ul>
+  <h3>Featured Champion Skin</h3>
+  <% let featuredSkin = Math.floor(Math.random() * championData.skins.length) %>
+  <img src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/<%= championCamelcase %>_<%= championData.skins[featuredSkin].num %>.jpg" alt="Featured Skin">
+  <h4><%= championData.skins[featuredSkin].name %></h4>
+</body>

@@ -6,6 +6,7 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('./config/ppConfig');
 const isLoggedIn = require('./middleware/isLoggedIn');
+const methodOverride = require('method-override');
 const db = require('./models');
 
 // environment variables
@@ -17,6 +18,7 @@ app.use(require('morgan')('dev'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(__dirname + '/public'));
 app.use(layouts);
+app.use(methodOverride('_method'));
 
 app.use(flash());            // flash middleware
 
@@ -45,17 +47,55 @@ app.use('/auth', require('./controllers/auth'));
 app.use('/recommendation', isLoggedIn, require('./controllers/recommendation'));
 
 // Add this below /auth controllers
-app.get('/profile', isLoggedIn, (req, res) => {
-  const { id, name, email } = req.user.get();
-  res.render('profile', { id, name, email });
+app.get('/profile', isLoggedIn, async (req, res) => {
+  try {
+    const { id, name, email } = req.user.get();
+    const userRecommendations = await db.recommendation.findAll({
+      where: {
+        userId: id
+      }
+    });
+    res.render('profile', { id, name, email, userRecommendations });
+  } catch (error) {
+    console.log('Error >>>', error);
+    res.status(500).send('Error occurred');
+  }
 });
 
-app.delete('/:userid', async (req, res) => {
+app.get('/:userid/delete', (req, res) => {
+    const { userid } = req.params;
+    return res.render('delete-confirmation.ejs', { userid });
+});
+
+app.get('/:userid/edit', async (req, res) => {
   try {
-    let numOfRowsDeleted = await db.user.destroy({
-      where: { id: 7 }
+    const { userid } = req.params;
+    const foundUser = await db.user.findOne({
+      where: { id: userid }
     });
-    console.log('number of rows deleted >>>', numOfRowsDeleted);
+    const name = foundUser.name;
+    console.log('found user', foundUser);
+    return res.render('edit.ejs', { userid, name });
+  } catch (error) {
+    console.log('Could not find user >>>', error);
+  }
+})
+
+app.delete('/user/:userid', async (req, res) => {
+  try {
+    const { userid } = req.params;
+    let numOfRowsDeleted = await db.user.destroy({
+      where: { id: userid }
+    });
+    return req.logOut(function(err, next) {
+      if (err) {
+        return next(err);
+      }
+      req.flash('success', 'Logging out... See you next time!');
+      res.redirect('/');
+    });
+/*     console.log('number of rows deleted >>>', numOfRowsDeleted);
+    return res.redirect('/'); */
   } catch (error) {
     console.log('did not delete user because of >>>', error);
   }
@@ -63,14 +103,16 @@ app.delete('/:userid', async (req, res) => {
 
 app.put('/:userid', async (req, res) => {
   try {
+    const newName = req.body.name;
     const numRowsUpdated = await db.user.update({
-      name: 'Updated Name'
+      name: newName,
     }, {
       where: {
         id: req.params.userid
       }
     });
     console.log('number of users updated', numRowsUpdated);
+    return res.redirect('/profile');
   } catch (error) {
     console.log('did not update user because of >>>', error);
   }
