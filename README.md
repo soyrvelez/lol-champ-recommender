@@ -60,4 +60,4 @@ LoL Recommender allows users to:
 ## Navigating The Project
 ### Data Models
 
-![ERD](https://github.com/soyrvelez/multiverse-fighter/blob/main/img/docs/game-overview.png?sanitize=true)
+![ERD](https://github.com/soyrvelez/lol-champ-recommender/blob/main/resources/lol-recommender-erd.png?sanitize=true)
