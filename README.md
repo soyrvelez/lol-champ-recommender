@@ -1,6 +1,7 @@
 # `LoL Recommender`
-
 AI powered vibe-based League of Legends Champion recommendation engine.
+
+![LoL Recommender](https://github.com/soyrvelez/lol-champ-recommender/blob/main/resources/lol-recommender-erd.png?sanitize=true)
 
 ## What is it?
 
@@ -54,10 +55,16 @@ LoL Recommender allows users to:
   }
 }
 ```
-5. Recommended: Do an initial commit and push to your fork. You should have a working server and application at this stage.
-6. Run your server and access the app ghrough the port specified in `server.js`.
+5. Run `sequelize db:create` from your terminal or manually create the required database in your server.
+6. Run `sequelize db:migrate` from your terminal to update your database's schema to the project's specifications.
+7. Recommended: Do an initial commit and push to your fork.`
+8. Run your server and access the app ghrough the port specified in `server.js`.
 
 ## Navigating The Project
 ### Data Models
-
+#### Entity Relationship Diagram
 ![ERD](https://github.com/soyrvelez/lol-champ-recommender/blob/main/resources/lol-recommender-erd.png?sanitize=true)
+
+#### User Model
+
+#### Recommendation Model
