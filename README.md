@@ -1,7 +1,7 @@
 # `LoL Recommender`
 AI powered vibe-based League of Legends Champion recommendation engine.
 
-![LoL Recommender](https://github.com/soyrvelez/lol-champ-recommender/blob/main/resources/lol-recommender-erd.png?sanitize=true)
+![LoL Recommender](https://github.com/soyrvelez/lol-champ-recommender/blob/main/resources/lolrecommender.png?sanitize=true)
 
 ## What is it?
 
