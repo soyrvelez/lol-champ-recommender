@@ -63,19 +63,29 @@ app.get('/profile', isLoggedIn, async (req, res) => {
 });
 
 app.get('/:userid/delete', (req, res) => {
-    const { userid } = req.params;
+  const { userid } = req.params;
+  const { id } = req.user.get();
+  if (userid == id) {
     return res.render('delete-confirmation.ejs', { userid });
+  } else {
+    return res.status(403).render('forbidden');
+  }
 });
 
 app.get('/:userid/edit', async (req, res) => {
   try {
     const { userid } = req.params;
-    const foundUser = await db.user.findOne({
-      where: { id: userid }
-    });
-    const name = foundUser.name;
-    console.log('found user', foundUser);
-    return res.render('edit.ejs', { userid, name });
+    const { id } = req.user.get();
+    if (userid == id) {
+      const foundUser = await db.user.findOne({
+        where: { id: userid }
+      });
+      const name = foundUser.name;
+      console.log('found user', foundUser);
+      return res.render('edit.ejs', { userid, name });
+    } else {
+      return res.status(403).render('forbidden');
+    }
   } catch (error) {
     console.log('Could not find user >>>', error);
   }
@@ -84,18 +94,23 @@ app.get('/:userid/edit', async (req, res) => {
 app.delete('/user/:userid', async (req, res) => {
   try {
     const { userid } = req.params;
-    let numOfRowsDeleted = await db.user.destroy({
-      where: { id: userid }
-    });
-    return req.logOut(function(err, next) {
-      if (err) {
-        return next(err);
-      }
-      req.flash('success', 'Logging out... See you next time!');
-      res.redirect('/');
-    });
-/*     console.log('number of rows deleted >>>', numOfRowsDeleted);
-    return res.redirect('/'); */
+    const { id } = req.user.get();
+    if (userid == id) {
+      let numOfRowsDeleted = await db.user.destroy({
+        where: { id: userid }
+      });
+      return req.logOut(function (err, next) {
+        if (err) {
+          return next(err);
+        }
+        req.flash('success', 'Logging out... See you next time!');
+        res.redirect('/');
+      });
+    } else {
+      return res.status(403).render('forbidden');
+    }
+    /*     console.log('number of rows deleted >>>', numOfRowsDeleted);
+        return res.redirect('/'); */
   } catch (error) {
     console.log('did not delete user because of >>>', error);
   }
@@ -103,16 +118,22 @@ app.delete('/user/:userid', async (req, res) => {
 
 app.put('/:userid', async (req, res) => {
   try {
-    const newName = req.body.name;
-    const numRowsUpdated = await db.user.update({
-      name: newName,
-    }, {
-      where: {
-        id: req.params.userid
-      }
-    });
-    console.log('number of users updated', numRowsUpdated);
-    return res.redirect('/profile');
+    const { userid } = req.params;
+    const { id } = req.user.get();
+    if (userid == id) {
+      const newName = req.body.name;
+      const numRowsUpdated = await db.user.update({
+        name: newName,
+      }, {
+        where: {
+          id: req.params.userid
+        }
+      });
+      console.log('number of users updated', numRowsUpdated);
+      return res.redirect('/profile');
+    } else {
+      return res.status(403).render('forbidden');
+    }
   } catch (error) {
     console.log('did not update user because of >>>', error);
   }

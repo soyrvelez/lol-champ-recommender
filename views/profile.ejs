@@ -20,12 +20,16 @@
           </tr>
         </thead>
         <tbody>
-          <% for( let index = 0; index < userRecommendations.length; index++ ) { %>
-            <tr>
-              <th scope="row"><%= userRecommendations[index].id %></th>
-              <td><%= userRecommendations[index].prompt %></td>
-              <td><a href="/recommendation/<%= userRecommendations[index].recommendedChampion %>"><%= userRecommendations[index].recommendedChampion %></a></td>
-          </tr>
+          <% if (userRecommendations.length > 0) { %>
+            <% for( let index = 0; index < userRecommendations.length; index++ ) { %>
+              <tr>
+                <th scope="row"><%= userRecommendations[index].id %></th>
+                <td><%= userRecommendations[index].prompt %></td>
+                <td><a href="/recommendation/<%= userRecommendations[index].recommendedChampion %>"><%= userRecommendations[index].recommendedChampion %></a></td>
+            </tr>
+            <% } %>
+          <% } else { %>
+            <h3 class="text-center mb-5">You haven't created any recommendations.</h3>
           <% } %>
         </tbody>
       </table>
