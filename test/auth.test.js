@@ -80,4 +80,7 @@ describe('Auth Controller', function() {
       .expect(302, done);
     });
   });
+
+  
+
 });

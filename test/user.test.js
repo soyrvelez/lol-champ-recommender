@@ -114,3 +114,37 @@ describe('User instance methods', function() {
     });
   });
 });
+
+describe('Updating a user', function() {
+  it('should update successfully', function(done) {
+    db.user.update({
+      name: 'New Name',
+    }, {
+      where: { id: 1 }
+    }).then(function() {
+      return db.user.findByPk(1);
+    }).then(function(updatedUser) {
+      if (updatedUser.name === 'New Name') {
+        done();
+      } else {
+        done(new Error('User was not updated successfully'));
+      }
+    }).catch(function(error) {
+      done(error);
+    });
+  });
+});
+
+describe('Deleting a user', function() {
+  it('should delete successfully', function(done) {
+    db.user.destroy({
+      where: {
+        id: 1
+      }
+    }).then(function() {
+      done();
+    }).catch(function(error) {
+      done(error);
+    });
+  });
+});
