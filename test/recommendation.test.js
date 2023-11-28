@@ -14,7 +14,7 @@ describe('Recommendation Controller', function () {
   describe('POST /recommend', function () {
     it('should create a new recommendation', function (done) {
       db.recommendation.create({
-        id: 1,
+        id: 5000,
         prompt: 'I want to play a high skill level jungler',
         champion: 'Lee Sin'
       }).then(function() {
