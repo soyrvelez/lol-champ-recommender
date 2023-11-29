@@ -58,7 +58,7 @@ LoL Recommender allows users to:
 5. Run `sequelize db:create` from your terminal or manually create the required database in your server.
 6. Run `sequelize db:migrate` from your terminal to update your database's schema to the project's specifications.
 7. Recommended: Do an initial commit and push to your fork.
-8. Run your server and access the app ghrough the port specified in `server.js`.
+8. Run your server and access the app through the port specified in `server.js`.
 
 ## Navigating The Project
 ### Data Models

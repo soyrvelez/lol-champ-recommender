@@ -86,7 +86,7 @@ Make a PR when you're done!
 - [x] Passwords hashed in database
 - [x] Passwords in form are input type="password" (dots)
 - [x] Password verification is checked
-- [ ] Can't sneak edit/delete data that I don't own by typing in random ids
+- [x ] Can't sneak edit/delete data that I don't own by typing in random ids
 ```
 `card` GITHUB USAGE
 ```
